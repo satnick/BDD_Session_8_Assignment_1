@@ -1,0 +1,10 @@
+
+all_lines = load '/pig_ex/words.txt' as (line:chararray);
+
+tokes = foreach all_lines generate TOKENIZE(line) as linelist;
+
+wordlist = foreach tokes generate FLATTEN(linelist) as words;
+
+wordgrp = group wordlist by words;
+
+wordcount1 = foreach wordgrp generate group,COUNT(wordlist);
